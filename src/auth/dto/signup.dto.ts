@@ -41,3 +41,23 @@ export class SignupDto extends LoginDto {
   @ApiHideProperty()
   additionalProperty?: never;
 }
+
+export class SignupResponseDto {
+
+  @IsNotEmpty()
+  @ApiProperty({ description: 'JWT Token expiry time' })
+  name: string;
+
+  @IsNotEmpty()
+  @ApiProperty({ description: 'JWT Token expiry time' })
+  email: string;
+
+  @IsNotEmpty()
+  @ApiProperty({ description: 'Unique Id of created user' })
+  _id: string;
+
+  
+  @Allow()
+  @ApiHideProperty()
+  additionalProperty?: never;
+}
