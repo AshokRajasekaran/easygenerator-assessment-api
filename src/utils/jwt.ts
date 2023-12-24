@@ -6,19 +6,6 @@ export interface JwtUserLoginType {
   id: string;
 }
 
-export const verify = (
-  token: string,
-  cb: (error: Error, decoded: JwtUserLoginType) => void
-) => {
-  jwt.verify(token, process.env.JWT_SECRET, function (err: Error, decoded: JwtUserLoginType) {
-    if (err) {
-      cb(err, null);
-    } else {
-      cb(null, decoded);
-    }
-  });
-};
-
 export const verifyAsync = (token: string): Promise<JwtUserLoginType> =>
   new Promise((res, rej) => {
     jwt.verify(

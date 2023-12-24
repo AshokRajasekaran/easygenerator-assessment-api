@@ -27,6 +27,7 @@ export class LoginDto {
     message:
       'Invalid Password',
   })
+  // Overriding variable delegation from parent class to avoid password policy exposing during login.
   readonly password: string;
 
   @Allow()

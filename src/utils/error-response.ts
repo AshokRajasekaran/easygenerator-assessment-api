@@ -17,6 +17,7 @@ export class ErrorHandler implements ExceptionFilter {
       error?.response?.message &&
       error.response.message.length
     ) {
+      // Handling/Wrapping class validator errors here.
       // API validators removing redunant messages during login, User must not see the quality of password in login, all vvalidation messaged as Invalid Password
       const errMessages = new Set(error.response.message);
       response.status(error.status).json({
@@ -25,6 +26,7 @@ export class ErrorHandler implements ExceptionFilter {
         errorMessage: Array.from(errMessages),
       });
     } else {
+      // Handling other custom errors here.
       switch (error.message) {
         case ErrorMessageCode.UNAUTHORISED_USER:
           response.status(403).json({
