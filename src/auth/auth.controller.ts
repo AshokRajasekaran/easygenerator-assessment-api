@@ -11,17 +11,11 @@ export class AuthController {
 
   @Post('/signup')
   signUp(@Body() signupPayload: SignupDto): any {
-    return {
-      statusCode: 200,
-      message: { ...signupPayload },
-    };
+    return this.authService.signUp(signupPayload);
   }
 
   @Post('/login')
   login(@Body() loginPayload: LoginDto): any {
-    return {
-        statusCode: 200,
-        message: { ...loginPayload },
-      };
+    return this.authService.login(loginPayload);
   }
 }

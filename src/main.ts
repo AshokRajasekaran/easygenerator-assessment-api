@@ -5,6 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 import * as cors from 'cors';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { ErrorHandler } from './utils/error-response';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,11 +18,12 @@ async function bootstrap() {
   );
   const config = new DocumentBuilder()
     .setTitle('Easy Generator Assessment API SERVER')
-    .setDescription('TO DO: Add description')
+    .setDescription('Easy Generator API DOcs')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/docs', app, document);
+  app.useGlobalFilters(new ErrorHandler());
   await app.listen(process.env.PORT);
 }
 bootstrap();
