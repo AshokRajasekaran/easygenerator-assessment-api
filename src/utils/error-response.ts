@@ -30,6 +30,7 @@ export class ErrorHandler implements ExceptionFilter {
         statusCode: error.status,
         path: request.url,
         errorMessage: Array.from(errMessages),
+        displayMessage: Array.from(errMessages),
       });
     } else {
       // Handling other custom errors here.
