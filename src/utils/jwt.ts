@@ -1,4 +1,4 @@
-import * as jwt from "jsonwebtoken";
+import * as jwt from 'jsonwebtoken';
 
 // Define the structure of the JWT payload for user login
 export interface JwtUserLoginType {
@@ -13,14 +13,14 @@ export const verifyAsync = (token: string): Promise<JwtUserLoginType> =>
   new Promise((res, rej) => {
     jwt.verify(
       token,
-      process.env.JWT_SECRET, // Secret key used for JWT verification
+      process.env.RSA_PUBLIC_KEY, // Secret key used for JWT verification
       function (err: Error, decoded: { data: JwtUserLoginType }) {
         if (err) {
           rej(err); // Reject the promise if there's an error during verification
         } else {
           res(decoded.data); // Resolve the promise with the decoded user data
         }
-      }
+      },
     );
   });
 
@@ -31,10 +31,11 @@ export const generateJwtToken = (data: JwtUserLoginType) => {
     {
       data,
     },
-    process.env.JWT_SECRET, // Secret key used for JWT signing
+    process.env.RSA_PRIVATE_KEY, // Secret key used for JWT signing
     {
+      algorithm: 'RS256', //  RSA algorithm
       expiresIn: process.env.JWT_TIMEOUT, // Expiration time for the token
-    }
+    },
   );
   return token; // Return the generated JWT token
 };
