@@ -50,7 +50,7 @@ export class LoginResponseDto {
 
   @ApiProperty({ description: 'Registered Email of the User' })
   @IsNotEmpty()
-  userEmail: string;
+  email: string;
   
   @Allow()
   @ApiHideProperty()

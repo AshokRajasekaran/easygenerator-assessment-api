@@ -14,7 +14,7 @@ export class AuthController {
   @ApiResponse({
     status: 200,
     description: 'Successful Signup',
-    type: SignupDto,
+    type: SignupResponseDto,
   })
   @ApiResponse({
     status: 400,
