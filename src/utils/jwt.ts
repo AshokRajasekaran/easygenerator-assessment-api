@@ -2,10 +2,16 @@ import * as jwt from 'jsonwebtoken';
 import * as path from 'path';
 import * as fs from 'fs';
 
-const publicKeyPath = path.join(__dirname, '../../rsakeys/public.pem');
-const privateKeyPath = path.join(__dirname, '../../rsakeys/private.pem');
-const publicKey = fs.readFileSync(publicKeyPath, 'utf-8') || null;
-const privateKey = fs.readFileSync(privateKeyPath, 'utf-8') || null;
+let privateKey;
+let publicKey;
+try {
+  const publicKeyPath = path.join(__dirname, '../../rsakeys/public.pem');
+  const privateKeyPath = path.join(__dirname, '../../rsakeys/private.pem');
+  publicKey = fs.readFileSync(publicKeyPath, 'utf-8') || null;
+  privateKey = fs.readFileSync(privateKeyPath, 'utf-8') || null;
+} catch (err) {
+  console.log('RSA Keys not found in server');
+}
 // Define the structure of the JWT payload for user login
 export interface JwtUserLoginType {
   name: string;
