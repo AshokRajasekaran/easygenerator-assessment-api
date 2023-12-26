@@ -38,7 +38,7 @@ $ npm run test:cov
 
 - Move .env file during build process
 
-- Create rsa keys in seperate folder with high security and read from there to encrypt and validate JWT tokens
+- Create rsa keys in seperate folder or as a secret file with high security and read from there to encrypt and validate JWT tokens
 
 ## Author
 

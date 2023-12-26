@@ -1,5 +1,11 @@
 import * as jwt from 'jsonwebtoken';
+import * as path from 'path';
+import * as fs from 'fs';
 
+const publicKeyPath = path.join(__dirname, '../../rsakeys/public.pem');
+const privateKeyPath = path.join(__dirname, '../../rsakeys/private.pem');
+const publicKey = fs.readFileSync(publicKeyPath, 'utf-8') || null;
+const privateKey = fs.readFileSync(privateKeyPath, 'utf-8') || null;
 // Define the structure of the JWT payload for user login
 export interface JwtUserLoginType {
   name: string;
@@ -13,7 +19,7 @@ export const verifyAsync = (token: string): Promise<JwtUserLoginType> =>
   new Promise((res, rej) => {
     jwt.verify(
       token,
-      process.env.RSA_PUBLIC_KEY, // Secret key used for JWT verification
+      publicKey || process.env.RSA_PUBLIC_KEY, // Secret key used for JWT verification
       function (err: Error, decoded: { data: JwtUserLoginType }) {
         if (err) {
           rej(err); // Reject the promise if there's an error during verification
@@ -31,7 +37,7 @@ export const generateJwtToken = (data: JwtUserLoginType) => {
     {
       data,
     },
-    process.env.RSA_PRIVATE_KEY, // Secret key used for JWT signing
+    privateKey || process.env.RSA_PRIVATE_KEY, // Secret key used for JWT signing
     {
       algorithm: 'RS256', //  RSA algorithm
       expiresIn: process.env.JWT_TIMEOUT, // Expiration time for the token
