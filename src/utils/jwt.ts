@@ -25,12 +25,12 @@ export const verifyAsync = (token: string): Promise<JwtUserLoginType> =>
   new Promise((res, rej) => {
     jwt.verify(
       token,
-      publicKey || process.env.RSA_PUBLIC_KEY, // Secret key used for JWT verification
+      publicKey || process.env.RSA_PUBLIC_KEY, 
       function (err: Error, decoded: { data: JwtUserLoginType }) {
         if (err) {
-          rej(err); // Reject the promise if there's an error during verification
+          rej(err); 
         } else {
-          res(decoded.data); // Resolve the promise with the decoded user data
+          res(decoded.data);
         }
       },
     );
@@ -43,11 +43,11 @@ export const generateJwtToken = (data: JwtUserLoginType) => {
     {
       data,
     },
-    privateKey || process.env.RSA_PRIVATE_KEY, // Secret key used for JWT signing
+    privateKey || process.env.RSA_PRIVATE_KEY,
     {
       algorithm: 'RS256', //  RSA algorithm
       expiresIn: process.env.JWT_TIMEOUT, // Expiration time for the token
     },
   );
-  return token; // Return the generated JWT token
+  return token;
 };
